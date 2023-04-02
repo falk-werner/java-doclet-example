@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+afterEvaluate {
+  task doc(type: Javadoc) {
+    dependsOn classes
+    source = sourceSets.test.allJava
+    classpath += sourceSets.test.compileClasspath
+    options.doclet = "org.example.doclet.TestCaseDoclet"
+    options.docletpath = (sourceSets.main.output + sourceSets.main.compileClasspath) as List
+    destinationDir = project.docsDir
+    title = ""
+  }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'junit:junit:4.13.2'
+}
